@@ -32,6 +32,22 @@ class App extends Component {
     console.log(e.currentTarget.value);
   };
 
+  componentDidMount() {
+    const savecontacts = localStorage.getItem('contacts');
+    if (savecontacts !==null) {
+      const parsedContacts = JSON.parse(savecontacts);
+      this.setState({ contacts: parsedContacts });
+    } else {
+      console.log('Not availabe');
+    }
+  };
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
     const normalizedFilter = this.state.filter.toLowerCase();
 console.log(this.state.contacts);
